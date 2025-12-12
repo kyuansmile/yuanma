@@ -854,9 +854,3 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Text = "加载完成 祝您使用愉快",
 	Duration = 5;
 })
-
-
-})
-
---我的qq 822588076
-print(hello world)
