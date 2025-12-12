@@ -481,11 +481,9 @@ local ESPConfig = {
 
 local ESPElements = {}
 
--- 清理玩家的所有ESP元素
 local function CleanupPlayerESP(player)
     if not ESPElements[player.UserId] then return end
     
-    -- 清理名字距离血量ESP
     if ESPElements[player.UserId].NameHealthESP then
         ESPElements[player.UserId].NameHealthESP:Destroy()
         ESPElements[player.UserId].NameHealthESP = nil
@@ -495,7 +493,6 @@ local function CleanupPlayerESP(player)
         ESPElements[player.UserId].NameHealthUpdateConn = nil
     end
     
-    -- 清理射线追踪
     if ESPElements[player.UserId].Tracer then
         ESPElements[player.UserId].Tracer:Remove()
         ESPElements[player.UserId].Tracer = nil
@@ -510,7 +507,6 @@ local function CreateNameDistanceHealthESP(player)
     if not player.Character or not player.Character:FindFirstChild("Head") then return end
     local head = player.Character.Head
     
-    -- 先清理旧的，再创建新的
     if ESPElements[player.UserId] and ESPElements[player.UserId].NameHealthESP then
         ESPElements[player.UserId].NameHealthESP:Destroy()
     end
@@ -551,7 +547,6 @@ local function CreateNameDistanceHealthESP(player)
     distanceLabel.Font = Enum.Font.Gotham -- 字体：普通哥特字体
     
     local updateConnection = RunService.RenderStepped:Connect(function()
-        -- 检查ESP是否仍然有效
         if not billboardGui.Parent or not LocalPlayer.Character or not player.Character then 
             return 
         end
@@ -587,7 +582,6 @@ local function CreateNameDistanceHealthESP(player)
 end
 
 local function CreateTracerESP(player)
-    -- 先清理旧的，再创建新的
     if ESPElements[player.UserId] and ESPElements[player.UserId].Tracer then
         ESPElements[player.UserId].Tracer:Remove()
     end
@@ -634,26 +628,22 @@ end
 local function UpdatePlayerESP(player)
     if player == LocalPlayer then return end
     
-    -- 如果角色不存在，清理ESP并返回
     if not player.Character then
         CleanupPlayerESP(player)
         return
     end
     
-    -- 检查角色是否完整（必须有Head和HumanoidRootPart）
     if not player.Character:FindFirstChild("Head") or not player.Character:FindFirstChild("HumanoidRootPart") then
         CleanupPlayerESP(player)
         return
     end
     
-    -- 根据配置创建或更新ESP
     if ESPConfig.MainSwitch then
         CreateTracerESP(player)
         
         if ESPConfig.ShowNameDistance or ESPConfig.ShowHealth then
             CreateNameDistanceHealthESP(player)
         else
-            -- 如果配置关闭，清理该ESP
             if ESPElements[player.UserId] and ESPElements[player.UserId].NameHealthESP then
                 ESPElements[player.UserId].NameHealthESP:Destroy()
                 ESPElements[player.UserId].NameHealthESP = nil
@@ -664,7 +654,6 @@ local function UpdatePlayerESP(player)
             end
         end
     else
-        -- 如果总开关关闭，清理所有ESP
         CleanupPlayerESP(player)
     end
 end
@@ -677,24 +666,19 @@ local function UpdateAllESP()
     end
 end
 
--- 处理玩家重生的延迟检查函数
 local function HandlePlayerRespawn(player)
-    -- 等待角色完全加载
     local character = player.Character
     if not character then
         character = player.CharacterAdded:Wait()
     end
     
-    -- 等待关键部件加载
     local head = character:WaitForChild("Head", 5)
     local rootPart = character:WaitForChild("HumanoidRootPart", 5)
     local humanoid = character:WaitForChild("Humanoid", 5)
     
     if head and rootPart and humanoid then
-        -- 增加多层延迟确保角色稳定
         task.wait(0.5)
         UpdatePlayerESP(player)
-        -- 额外的延迟检查，确保ESP正确创建
         task.wait(1)
         UpdatePlayerESP(player)
     end
@@ -860,6 +844,7 @@ end)
 
 
 
+
 task.spawn(function()
     task.wait(2) 
     UpdateAllESP()
@@ -868,6 +853,9 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "人挤人脚本",
 	Text = "加载完成 祝您使用愉快",
 	Duration = 5;
+})
+
+
 })
 
 --我的qq 822588076
