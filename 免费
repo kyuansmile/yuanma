@@ -1445,9 +1445,11 @@ about:Label("脚本测试中")
 about:Label("免费脚本")
 about:Label("---规则怪谈---")
 about:Label("见到The Cave团的自觉绕道走")
-
-
-
+about:Label("98k吃我牛了！！！")
+about:Label("98k吃我牛了！！！")
+about:Label("98k吃我牛了！！！")
+about:Label("98k吃我牛了！！！")
+about:Label("98k吃我牛了！！！")
 local about = UITab2:section("超级无敌脚本",true)
 
 -- 视野功能
