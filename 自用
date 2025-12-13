@@ -49,12 +49,16 @@ local UITab2 = win:Tab("脚本",'7734068321')
 local UITab3 = win:Tab("神刀",'7734068321')
 local UITab4 = win:Tab("透视",'7734068321')
 local UITab5 = win:Tab("传送",'7734068321')
+local UITab6 = win:Tab("98k吃大牛",'7734068321')
+local UITab7 = win:Tab("98k自拍超听话",'7734068321')
 
 local about = UITab1:section("公告",true)
 
 about:Label("kismile制作")
-
 about:Label("脚本测试中")
+about:Label("没")
+about:Label("98k吃我大牛")
+about:Label("98k自拍超听话")
 
 local about = UITab2:section("脚本",true)
 
